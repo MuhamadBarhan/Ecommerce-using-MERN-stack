@@ -1,6 +1,9 @@
 .order-form-container {
+  background-color: #fff;
     width: 40vw;
+    height: 100vh;
     margin: 0 auto;
+    padding: 2rem;
   }
   
   .form-group {
@@ -13,7 +16,7 @@
   }
   
   .order-form-input {
-    width: 100%;
+    width: 80%;
     padding: 8px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -22,11 +25,12 @@
   
   .order-form-btn {
     padding: 10px 20px;
+    margin-bottom: 2rem;
     font-size: 16px;
-    background-color: #007bff;
+    background-color: #008ecc;
     color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 20px;
     cursor: pointer;
   }
   
@@ -36,7 +40,8 @@
 
   @media screen and (max-width:450px) {
         .order-form-container {
-            width: 80vw;
+            width: auto;
+           
         }
   }
   

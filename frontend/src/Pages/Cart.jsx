@@ -128,7 +128,7 @@ const Cart = () => {
           ) : (
           <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',height:'80vh'}}>
            <p>No Items in the Cart</p>
-           <button onClick={()=>navigate('/')} className='formBtn'>Add Items</button>
+           <button onClick={()=>navigate('/')} className='formBtn'>Continue Shopping</button>
             </div>
           )}
         </>

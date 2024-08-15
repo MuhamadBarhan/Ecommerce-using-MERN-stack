@@ -78,7 +78,7 @@ const Home = () => {
       {loading ? (
         <div className="loading-animation">
           <ClipLoader color="#008ecc" loading={loading} size={20} />
-          <p>Since backend was hosted on render,it takes some time for initial loading</p> 
+          <p style={{textAlign:'center'}}>Since backend was hosted on render,it takes some time for initial loading</p> 
         </div>
       ) : (
         <div className="container">

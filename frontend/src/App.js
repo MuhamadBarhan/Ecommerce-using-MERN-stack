@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Signup from "./Pages/signup"
 import ForgotPassword from "./Pages/fpass";
 import Navbar from "./Pages/Components/navbar";
-import Mobiles from "./Pages/mobiles";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import Cart from "./Pages/Cart";
@@ -16,6 +15,7 @@ import OrderSummary from "./Pages/OrderSummary";
 import PaymentPage from "./Pages/Payment";
 import Profile from "./Pages/Profile";
 import './App.css'
+import Success from "./Pages/Success";
 
 
 function App() {
@@ -33,7 +33,6 @@ function App() {
           <Route path="/forgotpass" element={<ForgotPassword/>}/>
           <Route path="/profile" element={<Profile/>}/>
           <Route path="/wishlist" element={<Wishlist/>}/>
-          <Route path="/mobiles" element={<Mobiles/>}/>
           <Route path="/cart" element={<Cart/>}/>
           <Route path="/productdetails/:id" element={<ProductDetails/>}/>
           <Route path="/buynow/">
@@ -43,6 +42,7 @@ function App() {
           <Route path="/checkout" element={<Checkout/>}/>
           <Route path="/ordersummary" element={<OrderSummary/>}/>
           <Route path="/payment" element={<PaymentPage/>}/>
+          <Route path="/success" element={<Success/>}/>
         </Routes>
       </Router>
     </div>
