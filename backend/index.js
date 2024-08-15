@@ -241,6 +241,18 @@ app.post('/savecart', fetchUser, async (req, res) => {
 
 });
 
+//Creating endpoint to save wishData
+app.post('/savewishlist', fetchUser, async (req, res) => {
+    let userData = await Users.findOne({ _id: req.user.id });
+    if (!Array.isArray(userData.wishData)) {
+        userData.wishData = [userData.wishData];
+    }
+    userData.wishData = req.body;
+    await Users.findOneAndUpdate({ _id: req.user.id }, { wishData: userData.wishData });
+    res.send("Added");
+
+});
+
 //creating endpoint to get the cart data
 app.post('/getcart', fetchUser, async (req, res) => {
     let userData = await Users.findOne({ _id: req.user.id });

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios";
 import { useDispatch, useSelector } from 'react-redux'
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import CartComp from './Components/CartComp'
 import { modifyItem, removeItem } from '../redux/reducer/cart';
 import './Styles/CartComp.css'

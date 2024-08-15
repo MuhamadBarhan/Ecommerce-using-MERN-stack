@@ -15,8 +15,8 @@
 .sponsored-card {
     padding: 10px;
     margin: 0.5rem;
-    width: 160px;
-    height: 180px;
+    width: 15%;
+    height:15%;
     border-radius: 0.5rem;
     background-color: white;
     text-overflow: ellipsis;
@@ -30,7 +30,8 @@
 
 .sponsored-img {
     object-fit: cover;
-    height: 6rem;
+    height: auto;
+    width: 100%;
     margin-bottom: 2rem;
 }
 
@@ -40,5 +41,18 @@
     text-overflow: ellipsis;
     padding: 0;
     margin: 0;
-    font-size: 14px;
+    font-size: auto;
+}
+
+@media (max-width: 450px) {
+    .sponsored-card {
+        width: 40%; 
+    
+    }
+}
+@media (max-width: 360px) {
+    .sponsored-card {
+        width: 38%; 
+    
+    }
 }
