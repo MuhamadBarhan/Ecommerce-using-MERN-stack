@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios";
 import { useDispatch, useSelector } from 'react-redux'
+import toast, { Toaster } from "react-hot-toast";
 import CartComp from './Components/CartComp'
 import { modifyItem, removeItem } from '../redux/reducer/cart';
 import './Styles/CartComp.css'
@@ -9,6 +10,8 @@ import { setCartItems } from '../redux/reducer/cart';
 import { baseUrl } from '../url'
 
 const OrderSummary = () => {
+
+  const [amount, setAmount] = useState();
   const [loading, setLoading] = useState(true);
   const list = useSelector((state) => state.cart.list);
   const navigate = useNavigate();
@@ -71,6 +74,83 @@ const OrderSummary = () => {
 
   const { totalPrice, totalDiscount, totalAmount, totalItems } = calculatePrices();
 
+  useEffect(() => {
+    setAmount(totalAmount);
+  }, [totalAmount]);
+
+
+
+
+  // handlePayment Function
+  const handleSubmit = async () => {
+      try {
+          const res = await fetch(`${baseUrl}/order`, {
+              method: "POST",
+              headers: {
+                  "content-type": "application/json"
+              },
+              body: JSON.stringify({
+                  amount
+              })
+          });
+
+          const data = await res.json();
+          console.log(data);
+          handlePaymentVerify(data.data)
+      } catch (error) {
+          console.log(error);
+      }
+  }
+
+  // handlePaymentVerify Function
+  const handlePaymentVerify = async (data) => {
+      const options = {
+          key: 'rzp_test_1biQU72ZDIgaoF',
+          amount: data.amount,
+          currency: data.currency,
+          name: "MHD",
+          description: "Test Mode",
+          order_id: data.id,
+          handler: async (response) => {
+              console.log("response", response)
+              try {
+                  const res = await fetch(`${baseUrl}/verify`, {
+                      method: 'POST',
+                      headers: {
+                          'content-type': 'application/json'
+                      },
+                      body: JSON.stringify({
+                          razorpay_order_id: response.razorpay_order_id,
+                          razorpay_payment_id: response.razorpay_payment_id,
+                          razorpay_signature: response.razorpay_signature,
+                      })
+                  })
+
+                  const verifyData = await res.json();
+
+                  if (verifyData.message) {
+                      toast.success(verifyData.message)
+                  }
+              } catch (error) {
+                  console.log(error);
+              }
+          },
+          theme: {
+              color: "#008ecc"
+          },
+          method: {
+            googlepay: true,
+            upi: true,
+            card: true,
+            netbanking: true,
+            wallet: true,
+        }
+      };
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+  }
+
+
   return (
     <>
       {loading ? (
@@ -117,7 +197,8 @@ const OrderSummary = () => {
                   </div>
                 </div>
                 <div className='place-order-cont mob'>
-                  <button className='formBtn ' onClick={() => navigate('/payment')}>Continue to pay</button>
+                  <button className='formBtn ' onClick={handleSubmit}>Continue to pay</button>
+                  {/* () => navigate('/payment') */}
                 </div>
               </div>
             </>

@@ -6,6 +6,8 @@ const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
+const crypto=require('crypto');
+const Razorpay = require('razorpay');
 require('dotenv').config()
 const port = process.env.PORT;
 
@@ -132,7 +134,7 @@ const Users = mongoose.model('Users', {
         type: String
     },
     cartData: {
-        type: Array, 
+        type: Array,
         default: []
     },
     wishData: {
@@ -165,7 +167,7 @@ app.post('/signup', async (req, res) => {
 
     let cart = [];
     let wishlist = [];
-    let userdetails=[];
+    let userdetails = [];
     const user = new Users({
         name: req.body.username,
         email: req.body.email,
@@ -234,25 +236,98 @@ app.post('/savecart', fetchUser, async (req, res) => {
         userData.cartData = [userData.cartData];
     }
     userData.cartData = req.body;
-    await Users.findOneAndUpdate({_id:req.user.id} , {cartData:userData.cartData});
+    await Users.findOneAndUpdate({ _id: req.user.id }, { cartData: userData.cartData });
     res.send("Added");
 
 });
 
 //creating endpoint to get the cart data
-app.post('/getcart' , fetchUser , async(req,res)=>{
+app.post('/getcart', fetchUser, async (req, res) => {
     let userData = await Users.findOne({ _id: req.user.id });
     res.json(userData.cartData);
-    
+
 });
 
 //Creating endpoint to store userData
-app.post('/saveinfo' , fetchUser , async(req,res)=>{
-    let userData = await Users.findOne({_id:req.user.id});
-    userData.userInfo=req.body;
-    await Users.findOneAndUpdate({_id:req.user.id} , {userInfo:userData.userInfo});
+app.post('/saveinfo', fetchUser, async (req, res) => {
+    let userData = await Users.findOne({ _id: req.user.id });
+    userData.userInfo = req.body;
+    await Users.findOneAndUpdate({ _id: req.user.id }, { userInfo: userData.userInfo });
     res.send("Added");
 })
+
+
+//Razorpay Payment Integration
+var razorpayInstance = new Razorpay({
+    key_id: 'rzp_test_1biQU72ZDIgaoF',
+    key_secret: 'CoA8racU4iWMdgwcSLnGjLkn',
+});
+
+app.post('/order', (req, res) => {
+    const { amount } = req.body;
+
+    try {
+        const options = {
+            amount: Number(amount * 100),
+            currency: "INR",
+            receipt: crypto.randomBytes(10).toString("hex"),
+        }
+
+        razorpayInstance.orders.create(options, (error, order) => {
+            if (error) {
+                console.log(error);
+                return res.status(500).json({ message: "Something Went Wrong!" });
+            }
+            res.status(200).json({ data: order });
+            console.log(order)
+        });
+    } catch (error) {
+        res.status(500).json({ message: "Internal Server Error!" });
+        console.log(error);
+    }
+})
+
+app.post('/verify', async (req, res) => {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+
+    // console.log("req.body", req.body);
+
+    try {
+        // Create Sign
+        const sign = razorpay_order_id + "|" + razorpay_payment_id;
+
+        // Create ExpectedSign
+        const expectedSign = crypto.createHmac("sha256", 'CoA8racU4iWMdgwcSLnGjLkn')
+            .update(sign.toString())
+            .digest("hex");
+
+        // console.log(razorpay_signature === expectedSign);
+
+        // Create isAuthentic
+        const isAuthentic = expectedSign === razorpay_signature;
+
+        // Condition 
+        if (isAuthentic) {
+            // const payment = new Payment({
+            //     razorpay_order_id,
+            //     razorpay_payment_id,
+            //     razorpay_signature
+            // });
+
+            // // Save Payment 
+            // await payment.save();
+
+            // Send Message 
+            res.json({
+                message: "Payement Successfully"
+            });
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Internal Server Error!" });
+        console.log(error);
+    }
+})
+
 
 app.listen(port, (error) => {
     if (!error) {

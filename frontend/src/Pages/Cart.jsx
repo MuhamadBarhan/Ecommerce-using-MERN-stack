@@ -38,14 +38,14 @@ const Cart = () => {
     let totalItems = 0;
 
     list.forEach(item => {
-      const itemTotalPrice = item.new_price * item.count;
+      const itemTotalPrice = item.old_price * item.count;
       const itemTotalDiscount = (item.old_price - item.new_price) * item.count;
       totalPrice += itemTotalPrice;
       totalDiscount += itemTotalDiscount;
       totalItems += item.count;
     });
 
-    const totalAmount = totalPrice;
+    const totalAmount = totalPrice-totalDiscount;
 
     return { totalPrice, totalDiscount, totalAmount, totalItems };
   }
