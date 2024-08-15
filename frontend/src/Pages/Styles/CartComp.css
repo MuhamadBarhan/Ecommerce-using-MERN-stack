@@ -263,7 +263,6 @@
 
     .ct-container {
         border-bottom: 1px solid rgb(207, 207, 207);
-        height: 25vh;
     }
 
     .ct-product-card {
@@ -272,6 +271,6 @@
     }
 
     .place-order-cont {
-        width: 100%;
+        width: 95%;
     }
 }
