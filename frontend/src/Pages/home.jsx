@@ -65,6 +65,25 @@ const Home = () => {
         });
     }
 
+    
+    if (localStorage.getItem('auth-token')) {
+      axios.post(`${baseUrl}/getwishlist`, {}, {
+        headers: {
+          Accept: '*/*',
+          'auth-token': `${localStorage.getItem('auth-token')}`,
+          'Content-Type': 'application/json',
+        }
+      })
+        .then(res => {
+          dispatch(setWishItems(res.data));
+          console.log(res.data)
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+
+
 
     fetchProducts();
   }, [dispatch]);

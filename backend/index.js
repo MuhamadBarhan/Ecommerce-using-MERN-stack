@@ -260,6 +260,13 @@ app.post('/getcart', fetchUser, async (req, res) => {
 
 });
 
+//creating endpoint to get the wishlist data
+app.post('/getwishlist', fetchUser, async (req, res) => {
+    let userData = await Users.findOne({ _id: req.user.id });
+    res.json(userData.wishData);
+
+});
+
 //Creating endpoint to store userData
 app.post('/saveinfo', fetchUser, async (req, res) => {
     let userData = await Users.findOne({ _id: req.user.id });

@@ -8,6 +8,9 @@ export const wishSlice = createSlice({
         list:[],
     },
     reducers:{
+        setWishItems: (state, { payload }) => {
+            state.list = payload;
+        },
         addItemWishList:(state,{payload})=>{
             state.list=[...state.list,payload]
         },
@@ -22,7 +25,7 @@ export const wishSlice = createSlice({
 });
 
 
-export const {addItemWishList , removeItemWishList}=wishSlice.actions;
+export const {setWishItems, addItemWishList , removeItemWishList}=wishSlice.actions;
 
 // Thunk action to save wishlist state to the backend
 export const saveWishlistToBackendThunk = () => async (dispatch, getState) => {
