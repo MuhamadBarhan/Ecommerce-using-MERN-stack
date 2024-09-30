@@ -1,47 +1,91 @@
 .order-form-container {
-  background-color: #fff;
-    width: 40vw;
-    height: 100vh;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .order-form-input {
-    width: 90%;
-    padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .order-form-btn {
-    padding: 10px 20px;
-    margin-bottom: 2rem;
-    font-size: 16px;
-    background-color: #008ecc;
-    color: #fff;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-  }
-  
-  .order-form-btn:hover {
-    background-color: #0056b3;
+  background-color: #f9f9f9; /* Softer background for better contrast */
+  width: 40vw;
+  height: auto;
+  margin: 5% auto;
+  padding: 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+  border-radius: 12px; /* Rounded corners */
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  font-family: 'Poppins', sans-serif; /* Cleaner font */
+  font-size: 24px;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.order-form-input {
+  width: 100%; /* Full width for better mobile view */
+  padding: 12px; /* More padding for better feel */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Rounded input boxes */
+  transition: all 0.3s ease;
+}
+
+.order-form-input:focus {
+  border-color: #008ecc; /* Highlighted border */
+  box-shadow: 0 0 8px rgba(0, 142, 204, 0.2);
+}
+
+.order-form-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  background-color: #008ecc;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1.5rem;
+}
+
+.order-form-btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px); /* Slight pop on hover */
+}
+
+@media screen and (max-width: 768px) {
+  .order-form-container {
+    width: 80vw;
+    padding: 1.5rem;
   }
 
-  @media screen and (max-width:450px) {
-        .order-form-container {
-            width: auto;
-           
-        }
+  h2 {
+    font-size: 20px;
   }
-  
+
+  .order-form-input {
+    padding: 10px;
+  }
+
+  .order-form-btn {
+    padding: 10px;
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .order-form-container {
+    width: 95vw;
+  }
+
+  .order-form-btn {
+    padding: 10px;
+  }
+}

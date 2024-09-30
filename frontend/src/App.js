@@ -12,7 +12,6 @@ import ProductDetails from "./Pages/ProductDetails";
 import BuyNow from "./Pages/buynow";
 import Checkout from "./Pages/Checkout"
 import OrderSummary from "./Pages/OrderSummary";
-import PaymentPage from "./Pages/Payment";
 import Profile from "./Pages/Profile";
 import './App.css'
 import Success from "./Pages/Success";
@@ -41,7 +40,6 @@ function App() {
           </Route>
           <Route path="/checkout" element={<Checkout/>}/>
           <Route path="/ordersummary" element={<OrderSummary/>}/>
-          <Route path="/payment" element={<PaymentPage/>}/>
           <Route path="/success" element={<Success/>}/>
         </Routes>
       </Router>

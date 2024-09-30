@@ -8,8 +8,8 @@ import { faBoltLightning } from '@fortawesome/free-solid-svg-icons';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../redux/reducer/cart';
-import toast, { Toaster } from 'react-hot-toast';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
 
 const ProductDetails = () => {
 
@@ -36,7 +36,7 @@ const ProductDetails = () => {
 
   return (
     <div>
-      <Toaster/>
+      <ToastContainer autoClose={2000}/>
     <div className="product-detail" key={item.id} > 
       <div className="pd-image-container">
         <img src={item.image} alt={item.name} className="pd-image" />

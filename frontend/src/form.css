@@ -1,6 +1,7 @@
 .formCard {
     margin: 0 auto;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 80vh;
@@ -37,10 +38,10 @@
 #ip1, #ip2,#ip3,#ip4,#ip5,#ip6 {
     margin: 0.5rem;
     width: 15rem;
-    height: 2rem;
+    height: 1.5rem;
     padding: 0.4rem 0.8rem;
     border: 1px solid #ced4da ;
-    border-radius: 20px;
+    border-radius: 5px;
     font-size: 14px;
     outline: none;
 }
@@ -84,8 +85,9 @@
     margin: 1.2rem;
     padding: 0.6rem 5rem;
     border: none;
-    border-radius: 20px;
+    border-radius: 5px;
     cursor: pointer;
+    width: 16.5rem;
 }
 
 @media  screen and (max-width:450px) {

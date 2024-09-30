@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { faHeart as before } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as after } from '@fortawesome/free-solid-svg-icons';
@@ -10,11 +10,25 @@ const ProductCard = ({ product }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // Accessing the wishlist from Redux store
   const wishlist = useSelector((state) => state.wish.list);
-
+  
   // Using state to track wish icon for each product
-  const [wishIcons, setWishIcons] = useState({});
+  const [wishIcons, setWishIcons] = useState({})
+
+  useEffect(() => {
+      // Accessing the wishlist from Redux store
+
+    if (wishlist) {
+      const initialIcons = wishlist.reduce((acc, item) => {
+        acc[item.id] = after;
+        return acc;
+      }, {});
+
+      setWishIcons(initialIcons);
+    }
+  }, [dispatch]);
+
+;
 
   const handleChange = (productId) => {
     const isWished = wishIcons[productId] === after;

@@ -13,6 +13,7 @@ import { addProduct } from '../redux/reducer/products';
 import { useDispatch } from 'react-redux';
 import { baseUrl } from '../url'
 import { setCartItems } from '../redux/reducer/cart';
+import { setWishItems } from '../redux/reducer/wishlist';
 import toast, { Toaster } from 'react-hot-toast';
 import Sponsored from './Components/Sponsored';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -35,7 +36,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [allProducts, setAllProducts] = useState([]);
-
+  
   useEffect(() => {
     const fetchProducts = async () => {
       try {

@@ -272,8 +272,23 @@ app.post('/saveinfo', fetchUser, async (req, res) => {
     let userData = await Users.findOne({ _id: req.user.id });
     userData.userInfo = req.body;
     await Users.findOneAndUpdate({ _id: req.user.id }, { userInfo: userData.userInfo });
-    res.send("Added");
-})
+    res.send("Details Added");
+});
+
+//Creating endpoint to get userData
+app.get('/getuserinfo', fetchUser, async (req, res) => {
+    try {
+        let userData = await Users.findOne({ _id: req.user.id });
+        if (!userData.userInfo || userData.userInfo.length === 0) {
+            return res.status(404).json({ message: 'No address found' });
+        }
+        res.json(userData);
+        console.log(userData);
+    } catch (error) {
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
 
 
 //Razorpay Payment Integration

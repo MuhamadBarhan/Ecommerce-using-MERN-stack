@@ -1,0 +1,57 @@
+/* Profile.css */
+
+/* General container styling */
+.profile-container {
+    padding: 1rem;
+}
+
+.profile-header {
+    margin-bottom: 1rem;
+}
+
+.profile-header p {
+    font-weight: bold;
+}
+
+.saved-addresses {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.saved-address-item {
+    background: #f1f1f1;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+}
+
+.saved-address-item p {
+    margin: 0.5rem 0;
+}
+
+.edit-address-btn {
+    background-color: #55198b;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.orders-section, .wishlist-section {
+    background: #f1f1f1;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.logout-btn {
+    background-color: #008ecc;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 20px;
+    cursor: pointer;
+}
