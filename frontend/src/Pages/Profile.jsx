@@ -30,6 +30,7 @@ const Profile = () => {
             .then((res) => {
                 if (res.data) {
                     const userInfo = res.data;
+                    console.log(userInfo);
                     setUserData({
                         ...userData,
                         name: userInfo.name,

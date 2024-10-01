@@ -1,91 +1,55 @@
 .order-form-container {
-  background-color: #f9f9f9; /* Softer background for better contrast */
-  width: 40vw;
-  height: auto;
-  margin: 5% auto;
-  padding: 2rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
-  border-radius: 12px; /* Rounded corners */
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
   text-align: center;
   color: #333;
-  font-family: 'Poppins', sans-serif; /* Cleaner font */
-  font-size: 24px;
-  margin-bottom: 1.5rem;
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
-}
-
-label {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  color: #555;
-  margin-bottom: 0.5rem;
-  display: block;
+  margin-bottom: 15px;
 }
 
 .order-form-input {
-  width: 100%; /* Full width for better mobile view */
-  padding: 12px; /* More padding for better feel */
-  font-size: 16px;
+  width: 100%;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 8px; /* Rounded input boxes */
-  transition: all 0.3s ease;
-}
-
-.order-form-input:focus {
-  border-color: #008ecc; /* Highlighted border */
-  box-shadow: 0 0 8px rgba(0, 142, 204, 0.2);
+  border-radius: 4px;
 }
 
 .order-form-btn {
-  width: 100%;
-  padding: 12px;
-  font-size: 18px;
-  background-color: #008ecc;
+  background-color: #55198b;
   color: #fff;
+  padding: 10px 15px;
   border: none;
-  border-radius: 30px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 1.5rem;
+  margin: 10px;
 }
 
 .order-form-btn:hover {
-  background-color: #0056b3;
-  transform: translateY(-2px); /* Slight pop on hover */
+  background-color: #4c1781;
 }
 
-@media screen and (max-width: 768px) {
-  .order-form-container {
-    width: 80vw;
-    padding: 1.5rem;
-  }
-
-  h2 {
-    font-size: 20px;
-  }
-
-  .order-form-input {
-    padding: 10px;
-  }
-
-  .order-form-btn {
-    padding: 10px;
-    font-size: 16px;
-  }
+.address-list {
+  margin-top: 20px;
 }
 
-@media screen and (max-width: 450px) {
-  .order-form-container {
-    width: 95vw;
-  }
+.address-card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
 
-  .order-form-btn {
-    padding: 10px;
-  }
+.next-button {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
 }

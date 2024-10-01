@@ -34,7 +34,7 @@
     background-color: #55198b;
     color: white;
     border: none;
-    padding: 0.3rem 0.6rem;
+    padding: 0.5rem 1rem;
     border-radius: 20px;
     cursor: pointer;
 }
@@ -48,10 +48,10 @@
 }
 
 .logout-btn {
-    background-color: #008ecc;
+    background-color: #55198b;
     color: white;
     border: none;
-    padding: 0.3rem 0.6rem;
+    padding: 0.5rem 1rem;
     border-radius: 20px;
     cursor: pointer;
 }

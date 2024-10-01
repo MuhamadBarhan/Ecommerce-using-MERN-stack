@@ -208,7 +208,7 @@ app.post('/login', async (req, res) => {
         }
     }
     else {
-        res.status(401).send({ success: false, errors: "Wrong Email Id" });
+        res.status(401).send({ success: false, errors: "User not found! Please signup" });
     }
 })
 
@@ -267,13 +267,70 @@ app.post('/getwishlist', fetchUser, async (req, res) => {
 
 });
 
-//Creating endpoint to store userData
+// Combined endpoint to save a new address or update an existing address
 app.post('/saveinfo', fetchUser, async (req, res) => {
-    let userData = await Users.findOne({ _id: req.user.id });
-    userData.userInfo = req.body;
-    await Users.findOneAndUpdate({ _id: req.user.id }, { userInfo: userData.userInfo });
-    res.send("Details Added");
-});
+    try {
+      const userData = await Users.findById(req.user.id);
+      
+      // Check if the request body has an index for updating an existing address
+      if (req.body.index !== undefined) {
+        const { index, address } = req.body;
+        
+        if (index < userData.userInfo.length) {
+          // Update the specific address
+          userData.userInfo[index] = address;
+          await userData.save();
+          return res.send("Address updated successfully");
+        } else {
+          return res.status(400).send("Invalid address index");
+        }
+      } else {
+        // If no index is provided, push new address into userInfo array
+        userData.userInfo.push(req.body);
+        await userData.save();
+        return res.send("New address added successfully");
+      }
+    } catch (error) {
+      res.status(500).send('Error saving address');
+    }
+  });
+
+// DELETE endpoint to remove an address
+app.post('/deleteinfo', fetchUser, async (req, res) => {
+    const { index } = req.body; // Get index from request body
+    console.log(index);
+    const userId = req.user.id; // Assuming you have user authentication set up
+  
+    try {
+      // Find the user
+      const user = await Users.findById(userId);
+      
+      // Ensure the user exists
+      if (!user) {
+        return res.status(404).json({ message: 'User not fsound' });
+      }
+  
+      // Ensure addresses is an array
+      if (!Array.isArray(user.userInfo)) {
+        user.userInfo = []; 
+        console.log(user.userInfo.length);// Initialize as an empty array if it doesn't exist
+      }
+  
+      // Remove the address at the specified index
+      if (index >= 0 && index < user.userInfo.length) {
+        user.userInfo.splice(index, 1); // Remove address from the array
+        await user.save(); // Save the updated user
+        return res.status(200).json({ message: 'Address deleted successfully' });
+      } else {
+        return res.status(400).json({ message: 'Invalid address index' });
+      }
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Server error' });
+    }
+  });
+  
+  
 
 //Creating endpoint to get userData
 app.get('/getuserinfo', fetchUser, async (req, res) => {
