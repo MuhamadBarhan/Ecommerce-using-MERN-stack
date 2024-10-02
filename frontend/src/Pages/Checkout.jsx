@@ -5,6 +5,9 @@ import './Styles/Checkout.css';
 import { baseUrl } from '../url';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -28,15 +31,15 @@ const Checkout = () => {
         'auth-token': localStorage.getItem('auth-token')
       }
     })
-    .then((res) => {
-      if (res.data) {
-        const userInfo = res.data.userInfo || [];
-        setAddressList(userInfo); // Set the list of addresses
-      }
-    })
-    .catch((err) => {
-      toast.error(`No address found or error fetching address: ${err.response ? err.response.data : err.message}`);
-    });
+      .then((res) => {
+        if (res.data) {
+          const userInfo = res.data.userInfo || [];
+          setAddressList(userInfo); // Set the list of addresses
+        }
+      })
+      .catch((err) => {
+        console.log(`No address found or error fetching address: ${err.response ? err.response.data : err.message}`);
+      });
   }, []);
 
   const handleChange = (e) => {
@@ -49,36 +52,36 @@ const Checkout = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    axios.post(`${baseUrl}/saveinfo`, { 
-        index: editMode ? selectedAddressIndex : undefined, // Include index if in edit mode
-        address: formData 
+
+    axios.post(`${baseUrl}/saveinfo`, {
+      index: editMode ? selectedAddressIndex : undefined, // Include index if in edit mode
+      address: formData
     }, {
-        headers: {
-            'auth-token': localStorage.getItem('auth-token'),
-            'Content-Type': 'application/json',
-        }
+      headers: {
+        'auth-token': localStorage.getItem('auth-token'),
+        'Content-Type': 'application/json',
+      }
     })
-    .then(res => {
+      .then(res => {
         toast.success(res.data.message || 'Address saved successfully');
         // Fetch updated address list from the server
         return axios.get(`${baseUrl}/getuserinfo`, {
-            headers: {
-                'auth-token': localStorage.getItem('auth-token')
-            }
+          headers: {
+            'auth-token': localStorage.getItem('auth-token')
+          }
         });
-    })
-    .then((res) => {
+      })
+      .then((res) => {
         const userInfo = res.data.userInfo || [];
         setAddressList(userInfo); // Update the list of addresses
         setFormData({ street: '', city: '', pinCode: '', district: '', state: '', contactNumber: '' });
         setEditMode(false);
         setAddingNewAddress(false);
         setSelectedAddressIndex(null);
-    })
-    .catch((err) => {
+      })
+      .catch((err) => {
         toast.error(`Error saving address: ${err.response ? err.response.data : err.message}`);
-    });
+      });
   };
 
   const handleEdit = (index) => {
@@ -92,33 +95,36 @@ const Checkout = () => {
     if (window.confirm('Are you sure you want to delete this address?')) {
       const token = localStorage.getItem('auth-token'); // Get the token
       axios.post(`${baseUrl}/deleteinfo`, {
-        index , // Send index to identify which address to delete
+        index, // Send index to identify which address to delete
       }, {
         headers: {
           'auth-token': token, // Ensure the token is included
           'Content-Type': 'application/json',
         }
       })
-      .then(res => {
-        toast.success(res.data.message || 'Address deleted successfully');
-        // Fetch updated address list from the server
-        return axios.get(`${baseUrl}/getuserinfo`, {
-          headers: {
-            'auth-token': token, // Include the token here as well
+        .then(res => {
+          toast.success(res.data.message || 'Address deleted successfully');
+          // Fetch updated address list from the server
+          return axios.get(`${baseUrl}/getuserinfo`, {
+            headers: {
+              'auth-token': token, // Include the token here as well
+            }
+          });
+        })
+        .then((res) => {
+          const userInfo = res.data.userInfo || []; // If no addresses, default to empty array
+          if (userInfo.length === 0) {
+            toast.info("No address found");
           }
+          setAddressList(userInfo); // Update the address list
+          setSelectedAddressIndex(null); // Reset selected index
+        })
+        .catch((err) => {
+          toast.error(`Error deleting address: ${err.response ? err.response.data : err.message}`);
         });
-      })
-      .then((res) => {
-        const userInfo = res.data.userInfo || [];
-        setAddressList(userInfo); // Update the list of addresses
-        setSelectedAddressIndex(null); // Reset selected index
-      })
-      .catch((err) => {
-        toast.error(`Error deleting address: ${err.response ? err.response.data : err.message}`);
-      });
     }
   };
-  
+
 
   const handleAddNewAddress = () => {
     setFormData({ street: '', city: '', pinCode: '', district: '', state: '', contactNumber: '' });
@@ -132,7 +138,7 @@ const Checkout = () => {
       // Navigate to order summary page
       navigate('/ordersummary');
     } else {
-      toast.warn('Please select an address before proceeding.');
+      toast.warn('Please select an address or add new before proceeding.');
     }
   };
 
@@ -243,15 +249,16 @@ const Checkout = () => {
                     onChange={() => setSelectedAddressIndex(index)}
                   />
                   <label htmlFor={`address-${index}`}>
-                    <div><strong>Street:</strong> {address.street}</div>
-                    <div><strong>City:</strong> {address.city}</div>
-                    <div><strong>Pin Code:</strong> {address.pinCode}</div>
-                    <div><strong>District:</strong> {address.district}</div>
-                    <div><strong>State:</strong> {address.state}</div>
-                    <div><strong>Contact Number:</strong> {address.contactNumber}</div>
+                    <p>{address.street}, {address.city}, {address.district}, {address.state} - {address.pinCode}</p>
+                    <p>Contact: {address.contactNumber}</p>
                   </label>
-                  <button className="order-form-btn" onClick={() => handleEdit(index)}>Edit</button>
-                  <button className="order-form-btn delete-btn" onClick={() => handleDelete(index)}>Delete</button>
+                  <button className="order-form-btn" onClick={() => handleEdit(index)}>
+                    <FontAwesomeIcon icon={faEdit} /> Edit
+                  </button>
+                  <button className="order-form-btn delete-btn" onClick={() => handleDelete(index)}>
+                    <FontAwesomeIcon icon={faTrashAlt} /> Delete
+                  </button>
+
                 </div>
               ))
             ) : (
@@ -260,13 +267,14 @@ const Checkout = () => {
           </div>
 
           <button className="order-form-btn" onClick={handleAddNewAddress}>
-            Add New Address
+            <FontAwesomeIcon icon={faPlus} /> Add Address
           </button>
+
         </>
       )}
 
-      <button className="order-form-btn" onClick={handleNext}>
-        Proceed to Order Summary
+      <button className="formBtn" onClick={handleNext}>
+        Next
       </button>
     </div>
   );

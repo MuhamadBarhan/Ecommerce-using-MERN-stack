@@ -1,3 +1,4 @@
+/* General container styles */
 .order-form-container {
   width: 80%;
   margin: 0 auto;
@@ -24,17 +25,26 @@ h2 {
 }
 
 .order-form-btn {
-  background-color: #55198b;
-  color: #fff;
-  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
   border: none;
+  margin: 0.5rem;
+  gap: 5px; /* Add spacing between icon and text */
+  cursor: pointer; /* Change cursor on hover */
+  background-color: transparent;
+  border: 1px solid gray;
   border-radius: 5px;
-  cursor: pointer;
-  margin: 10px;
 }
 
-.order-form-btn:hover {
-  background-color: #4c1781;
+
+.delete-btn {
+  color: red;
+}
+
+.order-form-btn svg {
+  width: 1em;
+  height: 1em;
 }
 
 .address-list {
@@ -46,10 +56,67 @@ h2 {
   padding: 10px;
   border-radius: 5px;
   margin: 10px 0;
+  display: flex;
+  align-items: flex-start; /* Align items to the start of the card */
+  gap: 10px; /* Space between the radio button and text */
+}
+
+.address-card input[type="radio"] {
+  margin-top: 5px; /* Adjust the margin to vertically align the radio button */
+}
+
+.address-card label {
+  flex-grow: 1;
+}
+
+.address-card p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
 }
 
 .next-button {
   display: block;
   width: 100%;
   margin-top: 20px;
+}
+
+.address-card .order-form-btn {
+  margin: 0 5px;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.address-card .order-form-btn:hover {
+  background-color: #f0f0f0; /* Change to light gray on hover */
+}
+
+.address-card .delete-btn {
+  color: #e74c3c;
+}
+
+.address-card .delete-btn:hover {
+  background-color: #f7b6b1;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .order-form-container {
+    width: auto;
+    padding: 15px;
+  }
+
+  .order-form-btn {
+    padding: 0.5rem;
+  }
+
+  .address-card label {
+    margin-top: 10px;
+  }
+
+  .next-button {
+    margin-top: 20px;
+  }
 }

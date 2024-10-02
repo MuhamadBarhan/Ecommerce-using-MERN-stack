@@ -286,7 +286,7 @@ app.post('/saveinfo', fetchUser, async (req, res) => {
         }
       } else {
         // If no index is provided, push new address into userInfo array
-        userData.userInfo.push(req.body);
+        userData.userInfo.push(req.body.address);
         await userData.save();
         return res.send("New address added successfully");
       }
@@ -307,7 +307,7 @@ app.post('/deleteinfo', fetchUser, async (req, res) => {
       
       // Ensure the user exists
       if (!user) {
-        return res.status(404).json({ message: 'User not fsound' });
+        return res.status(404).json({ message: 'User not found' });
       }
   
       // Ensure addresses is an array
@@ -336,9 +336,6 @@ app.post('/deleteinfo', fetchUser, async (req, res) => {
 app.get('/getuserinfo', fetchUser, async (req, res) => {
     try {
         let userData = await Users.findOne({ _id: req.user.id });
-        if (!userData.userInfo || userData.userInfo.length === 0) {
-            return res.status(404).json({ message: 'No address found' });
-        }
         res.json(userData);
         console.log(userData);
     } catch (error) {
